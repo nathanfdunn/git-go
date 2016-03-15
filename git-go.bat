@@ -1,6 +1,11 @@
 @ECHO OFF
+git rev-parse --is-inside-work-tree 2> NUL 1> NUL
+IF ERRORLEVEL 128 goto notinrepo
+echo Script should not be executed from within git repository. Exiting . . .
+exit /b 1
+:notinrepo
 IF NOT EXIST git_demo_folder goto next
-rmdir git_demo_folder
+echo y | rmdir /s git_demo_folder 1> NUL
 :next
 @ECHO ON
 
